@@ -1,0 +1,31 @@
+# Description: Zabbix Server 7.0 LTS
+# ==============================================================================
+# Networks
+networks:
+  nginx-subnet:
+    name: nginx-subnet
+# ==============================================================================
+# Volumes
+volumes:
+  nginx: { name: nginx }
+# ==============================================================================
+# Services
+services:
+# ==============================================================================
+# Nginx (PHP-FPM)
+  nginx:
+    image: nginx:stable
+    container_name: nginx
+    restart: unless-stopped
+    networks: [nginx-subnet]
+    environment:
+      NGINX_ENVSUBST_TEMPLATE_SUFFIX: ".template"
+    ports: ["0.0.0.0:443:443", "0.0.0.0:80:80"]
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./templates:/etc/nginx/templates:ro
+    healthcheck:
+      test: ["CMD", "sh", "-c", "pidof nginx"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

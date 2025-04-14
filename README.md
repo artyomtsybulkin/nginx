@@ -21,3 +21,4 @@ stream {
 }
 ```
 
+It's better to use single subnet and connect to it everything.
