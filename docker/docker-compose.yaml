@@ -3,7 +3,7 @@
 # Networks
 networks:
   nginx-subnet:
-    name: nginx-subnet
+    name: private
 # ==============================================================================
 # Volumes
 volumes:
@@ -17,7 +17,7 @@ services:
     image: nginx:stable
     container_name: nginx
     restart: unless-stopped
-    networks: [nginx-subnet]
+    networks: [ private ]
     environment:
       NGINX_ENVSUBST_TEMPLATE_SUFFIX: ".template"
     ports: ["0.0.0.0:443:443", "0.0.0.0:80:80"]
